@@ -32,6 +32,11 @@ class Checkout
 		return "%.2f" % calc_total
 	end
 
+	def print
+		puts "Items: #{items.map {|i| i.description}.join(', ')}"
+		puts "Total: #{total}€".colorize(:red)
+	end
+
 end
 
 class Item
