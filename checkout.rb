@@ -36,10 +36,11 @@ class Checkout
 end
 
 class Item
-	attr_reader :price,:description
-	def initialize(price,description)
+	attr_reader :price,:description,:rule
+	def initialize(price,description,rule)
 		@price = price
 		@description = description
+		@rule = rule
 	end
 
 end

@@ -10,6 +10,9 @@ VOUCHER = Item.new(5,'Cabify Voucher')
 TSHIRT = Item.new(20,'Cabify T-Shirt')
 MUG = Item.new(7.5,'Cabify Coffee Mug')
 
+TWOFORONE = Rule.new(2,0.5)
+MORETHAN3 = Rule.new(3,0.95)
+
 # test 1
 co = Checkout.new(pricing_rules)
 

@@ -8,9 +8,12 @@ RSpec.describe "Checkout" do
 			TSHIRT: {qty:3,discount:0.95}, 
 			MUG:{qty:1,discount:0}
 		}
-		VOUCHER = Item.new(5,'Cabify Voucher')
-		TSHIRT = Item.new(20,'Cabify T-Shirt')
-		MUG = Item.new(7.5,'Cabify Coffee Mug')
+		TWOFORONE = Rule.new(2,0.5)
+		MORETHAN3 = Rule.new(3,0.95)
+
+		VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
+		TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)
+		MUG = Item.new(7.5,'Cabify Coffee Mug',nil)
 
 		@co = Checkout.new(pricing_rules)	
 	end
@@ -81,7 +84,8 @@ end
 
 RSpec.describe "Item" do
 	before :each do
-		@myItem = Item.new(2,'My first item')	
+		myRule = Rule.new(2,2)
+		@myItem = Item.new(2,'My first item',myRule)	
 	end
 
 	describe "initialize" do
@@ -96,6 +100,10 @@ RSpec.describe "Item" do
 
 		it "sets description to 'My first item'" do
 			expect(@myItem.description).to eq('My first item')
+		end
+
+		it "sets a rule" do
+			expect(@myItem.rule).to be_instance_of(Rule)
 		end
 
 	end
