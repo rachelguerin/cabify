@@ -19,14 +19,6 @@ class Checkout
 		qty = @items.select {|i| i == item}.count
 
 		return eval(item.rule.calc)
-		# case item
-		# when VOUCHER 
-		# 	return ((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)
-		# when TSHIRT
-		# 	return qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount 
-		# else 
-		# 	return qty * item.price
-		# end
 	end
 
 	def total
