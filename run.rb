@@ -1,5 +1,4 @@
 require 'pry'
-require 'colorize'
 require_relative 'checkout.rb'
 
 TWOFORONE = Rule.new(2,0.5,"((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)")

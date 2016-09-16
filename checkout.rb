@@ -1,4 +1,5 @@
 require 'pry'
+require 'colorize'
 
 class Checkout
 	attr_reader :items
