@@ -44,3 +44,10 @@ class Item
 
 end
 
+class Rule
+	attr_reader :qty,:discount
+	def initialize(qty,discount)
+		@qty = qty
+		@discount = discount
+	end
+end

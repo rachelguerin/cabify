@@ -101,3 +101,25 @@ RSpec.describe "Item" do
 	end
 end
 
+RSpec.describe "Rule" do
+	before :each do
+		@myRule = Rule.new(2,0.5)	
+	end
+
+	describe "initialize" do
+
+		it "creates Rule object" do		
+			expect(@myRule).to be_instance_of(Rule)
+		end
+
+		it "sets qty to 2" do
+			expect(@myRule.qty).to eq(2)
+		end
+
+		it "sets description to 'My first item'" do
+			expect(@myRule.discount).to eq(0.5)
+		end
+
+	end
+end
+
