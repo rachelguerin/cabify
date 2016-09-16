@@ -2,20 +2,15 @@ require './checkout.rb'
 require 'Rspec'
 
 RSpec.describe "Checkout" do
+	TWOFORONE = Rule.new(2,0.5)
+	MORETHAN3 = Rule.new(3,0.95)
+
+	VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
+	TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)
+	MUG = Item.new(7.5,'Cabify Coffee Mug',nil)
+
 	before :each do
-		pricing_rules = { 
-			VOUCHER: {qty:2,discount:0.5}, 
-			TSHIRT: {qty:3,discount:0.95}, 
-			MUG:{qty:1,discount:0}
-		}
-		TWOFORONE = Rule.new(2,0.5)
-		MORETHAN3 = Rule.new(3,0.95)
-
-		VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
-		TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)
-		MUG = Item.new(7.5,'Cabify Coffee Mug',nil)
-
-		@co = Checkout.new(pricing_rules)	
+		@co = Checkout.new	
 	end
 
 	describe "initialize" do

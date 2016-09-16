@@ -3,10 +3,8 @@ require 'pry'
 class Checkout
 	attr_reader :items
 
-	def initialize(pricing_rules)
-		@pricing_rules = pricing_rules
+	def initialize
 		@items = []
-		@total = 0
 	end
 
 	def scan(item)
@@ -19,13 +17,14 @@ class Checkout
 
 	def calc_item_total(item)
 		qty = @items.select {|i| i == item}.count
+		
 		case item
-		when :VOUCHER 
-			return ((qty / @pricing_rules[item][:qty])*item[:price])+ ((qty % @pricing_rules[item][:qty])*item[:price])
-		when :TSHIRT
-			return qty < @pricing_rules[item][:qty] ? qty * item[:price] : qty * item[:price] * @pricing_rules[item][:disc] 
+		when VOUCHER 
+			return ((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)
+		when TSHIRT
+			return qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount 
 		else 
-			return qty * item[:price]
+			return qty * item.price
 		end
 	end
 
@@ -37,7 +36,7 @@ end
 
 class Item
 	attr_reader :price,:description,:rule
-	def initialize(price,description,rule)
+	def initialize(price,description,rule=nil)
 		@price = price
 		@description = description
 		@rule = rule

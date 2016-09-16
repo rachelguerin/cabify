@@ -2,25 +2,21 @@ require 'pry'
 require 'colorize'
 require_relative 'checkout.rb'
 
-pricing_rules = { VOUCHER: {qty:2}, 
-					TSHIRT: {qty:3,disc:0.95}
-				}
-
-VOUCHER = Item.new(5,'Cabify Voucher')
-TSHIRT = Item.new(20,'Cabify T-Shirt')
-MUG = Item.new(7.5,'Cabify Coffee Mug')
-
 TWOFORONE = Rule.new(2,0.5)
 MORETHAN3 = Rule.new(3,0.95)
 
+VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
+TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)
+MUG = Item.new(7.5,'Cabify Coffee Mug')
+
 # test 1
-co = Checkout.new(pricing_rules)
+co = Checkout.new
 
-co.scan VOUCHER
 co.scan TSHIRT
-co.scan MUG
+co.scan TSHIRT
+co.scan TSHIRT
 
-binding.pry
+co.calc_total
 
 # price = co.total
 
