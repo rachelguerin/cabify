@@ -2,12 +2,13 @@ require './checkout.rb'
 require 'Rspec'
 
 RSpec.describe "Checkout" do
-	TWOFORONE = Rule.new(2,0.5)
-	MORETHAN3 = Rule.new(3,0.95)
+	TWOFORONE = Rule.new(2,0.5,"((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)")
+	MORETHAN3 = Rule.new(3,0.95,"qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount")
+	NODISC = Rule.new(1,1,"qty * item.price")
 
 	VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
 	TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)
-	MUG = Item.new(7.5,'Cabify Coffee Mug',nil)
+	MUG = Item.new(7.5,'Cabify Coffee Mug',NODISC)
 
 	before :each do
 		@co = Checkout.new	
@@ -79,7 +80,7 @@ end
 
 RSpec.describe "Item" do
 	before :each do
-		myRule = Rule.new(2,2)
+		myRule = Rule.new(2,2,"discount * qty")
 		@myItem = Item.new(2,'My first item',myRule)	
 	end
 
@@ -106,7 +107,7 @@ end
 
 RSpec.describe "Rule" do
 	before :each do
-		@myRule = Rule.new(2,0.5)	
+		@myRule = Rule.new(2,0.5,"discount * qty")	
 	end
 
 	describe "initialize" do
@@ -121,6 +122,10 @@ RSpec.describe "Rule" do
 
 		it "sets description to 'My first item'" do
 			expect(@myRule.discount).to eq(0.5)
+		end
+
+		it "evals rule" do
+			expect(@myRule.calc).to eq("discount * qty")
 		end
 
 	end

@@ -17,15 +17,16 @@ class Checkout
 
 	def calc_item_total(item)
 		qty = @items.select {|i| i == item}.count
-		
-		case item
-		when VOUCHER 
-			return ((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)
-		when TSHIRT
-			return qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount 
-		else 
-			return qty * item.price
-		end
+
+		return eval(item.rule.calc)
+		# case item
+		# when VOUCHER 
+		# 	return ((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)
+		# when TSHIRT
+		# 	return qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount 
+		# else 
+		# 	return qty * item.price
+		# end
 	end
 
 	def total
@@ -50,9 +51,10 @@ class Item
 end
 
 class Rule
-	attr_reader :qty,:discount
-	def initialize(qty,discount)
+	attr_reader :qty,:discount,:calc
+	def initialize(qty,discount,calc)
 		@qty = qty
 		@discount = discount
+		@calc = calc
 	end
 end
