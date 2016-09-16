@@ -6,54 +6,60 @@ pricing_rules = { VOUCHER: {qty:2},
 					TSHIRT: {qty:3,disc:0.95}
 				}
 
+VOUCHER = Item.new(5,'Cabify Voucher')
+TSHIRT = Item.new(20,'Cabify T-Shirt')
+MUG = Item.new(7.5,'Cabify Coffee Mug')
+
 # test 1
 co = Checkout.new(pricing_rules)
 
-co.scan :VOUCHER
-co.scan :TSHIRT
-co.scan :MUG
+co.scan VOUCHER
+co.scan TSHIRT
+co.scan MUG
 
-price = co.total
+binding.pry
 
-puts "Items: #{co.items.join(', ')}"
-puts "Total: #{price}€".colorize(:red)
+# price = co.total
 
-# # test 2
-co2 = Checkout.new(pricing_rules)
+# puts "Items: #{co.items.join(', ')}"
+# puts "Total: #{price}€".colorize(:red)
 
-co2.scan :VOUCHER
-co2.scan :TSHIRT
-co2.scan :VOUCHER
+# # # test 2
+# co2 = Checkout.new(pricing_rules)
 
-price2 = co2.total
-puts "Items: #{co2.items.join(', ')}"
-puts "Total: #{price2}€".colorize(:red)
+# co2.scan :VOUCHER
+# co2.scan :TSHIRT
+# co2.scan :VOUCHER
 
-# test 3
-co3 = Checkout.new(pricing_rules)
+# price2 = co2.total
+# puts "Items: #{co2.items.join(', ')}"
+# puts "Total: #{price2}€".colorize(:red)
 
-co3.scan :TSHIRT
-co3.scan :TSHIRT
-co3.scan :TSHIRT
-co3.scan :VOUCHER
-co3.scan :TSHIRT
+# # test 3
+# co3 = Checkout.new(pricing_rules)
 
-price3 = co3.total
+# co3.scan :TSHIRT
+# co3.scan :TSHIRT
+# co3.scan :TSHIRT
+# co3.scan :VOUCHER
+# co3.scan :TSHIRT
 
-puts "Items: #{co3.items.join(', ')}"
-puts "Total: #{price3}€".colorize(:red)
+# price3 = co3.total
 
-# test 4
-co4 = Checkout.new(pricing_rules)
+# puts "Items: #{co3.items.join(', ')}"
+# puts "Total: #{price3}€".colorize(:red)
 
-co4.scan :VOUCHER
-co4.scan :TSHIRT
-co4.scan :VOUCHER
-co4.scan :VOUCHER
-co4.scan :MUG
-co4.scan :TSHIRT
-co4.scan :TSHIRT
+# # test 4
+# co4 = Checkout.new(pricing_rules)
 
-price4 = co4.total
-puts "Items: #{co4.items.join(', ')}"
-puts "Total: #{price4}€".colorize(:red)
+# co4.scan :VOUCHER
+# co4.scan :TSHIRT
+# co4.scan :VOUCHER
+# co4.scan :VOUCHER
+# co4.scan :MUG
+# co4.scan :TSHIRT
+# co4.scan :TSHIRT
+
+# price4 = co4.total
+# puts "Items: #{co4.items.join(', ')}"
+# puts "Total: #{price4}€".colorize(:red)
