@@ -3,7 +3,9 @@ require 'Rspec'
 
 RSpec.describe "Item" do
 	before :each do
-		myRule = Rule.new(2,2,"discount * qty")
+		myRule = Proc.new do 
+			discount * qty
+		end
 		@myItem = Item.new(2,'My first item',myRule)	
 	end
 
@@ -22,42 +24,26 @@ RSpec.describe "Item" do
 		end
 
 		it "sets a rule" do
-			expect(@myItem.rule).to be_instance_of(Rule)
+			expect(@myItem.rule).to be_instance_of(Proc)
 		end
 
 	end
 end
 
-RSpec.describe "Rule" do
-	before :each do
-		@myRule = Rule.new(2,0.5,"discount * qty")	
-	end
-
-	describe "initialize" do
-
-		it "creates Rule object" do		
-			expect(@myRule).to be_instance_of(Rule)
-		end
-
-		it "sets qty to 2" do
-			expect(@myRule.qty).to eq(2)
-		end
-
-		it "sets description to 'My first item'" do
-			expect(@myRule.discount).to eq(0.5)
-		end
-
-		it "evals rule" do
-			expect(@myRule.calc).to eq("discount * qty")
-		end
-
-	end
-end
+# 
 
 RSpec.describe "Checkout" do
-	TWOFORONE = Rule.new(2,0.5,"((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)")
-	MORETHAN3 = Rule.new(3,0.95,"qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount")
-	NODISC = Rule.new(1,1,"qty * item.price")
+	TWOFORONE = Proc.new do |qty, price|
+	((qty / 2)*price)+ ((qty % 2)*price)
+	end 
+
+	MORETHAN3 = Proc.new do |qty, price|
+		qty < 3 ? qty * price : qty * price * 0.95
+	end
+
+	NODISC = Proc.new do |qty, price|
+		qty * price
+	end
 
 	VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
 	TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)

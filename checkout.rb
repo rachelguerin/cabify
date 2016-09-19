@@ -17,9 +17,8 @@ class Checkout
 	end
 
 	def calc_item_total(item)
-		qty = @items.select {|i| i == item}.count
-
-		return eval(item.rule.calc)
+		qty = @items.select {|i| i == item}.count	
+		return item.rule.call qty, item.price
 	end
 
 	def total

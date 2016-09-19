@@ -1,9 +1,17 @@
 require 'pry'
 require_relative 'checkout.rb'
 
-TWOFORONE = Rule.new(2,0.5,"((qty / item.rule.qty)*item.price)+ ((qty % item.rule.qty)*item.price)")
-MORETHAN3 = Rule.new(3,0.95,"qty < item.rule.qty ? qty * item.price : qty * item.price * item.rule.discount")
-NODISC = Rule.new(1,1,"qty * item.price")
+TWOFORONE = Proc.new do |qty, price|
+	((qty / 2)*price)+ ((qty % 2)*price)
+end 
+
+MORETHAN3 = Proc.new do |qty, price|
+	qty < 3 ? qty * price : qty * price * 0.95
+end
+
+NODISC = Proc.new do |qty, price|
+	qty * price
+end
 
 VOUCHER = Item.new(5,'Cabify Voucher',TWOFORONE)
 TSHIRT = Item.new(20,'Cabify T-Shirt',MORETHAN3)
